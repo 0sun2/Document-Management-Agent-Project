@@ -27,24 +27,44 @@ class FastAPIVectorStore implements VectorStoreAdapter {
   async indexDocument(documentId: string, chunks: string[], filename: string, file: File): Promise<void> {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('document_id', documentId);
+    formData.append('original_filename', filename);
 
-    const response = await fetch(`${FASTAPI_URL}/upload`, {
-      method: 'POST',
-      body: formData,
-    });
+    const uploadUrl = `${FASTAPI_URL}/upload`;
+    console.log('Uploading to:', uploadUrl);
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ error: 'Upload failed' }));
-      throw new Error(error.error || 'Failed to upload document');
+    try {
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          errorData = { error: errorText || 'Upload failed' };
+        }
+        console.error('Upload failed:', response.status, errorData);
+        throw new Error(errorData.detail || errorData.error || `Upload failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      // Store mapping between our frontend documentId and backend doc_id
+      this.docMetadata.set(documentId, {
+        filename: result.filename || filename,
+        docId: result.doc_id,
+      });
+    } catch (error) {
+      console.error('Upload error:', error);
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        throw new Error(`백엔드 서버에 연결할 수 없습니다. ${FASTAPI_URL} 서버가 실행 중인지 확인하세요.`);
+      }
+      throw error;
     }
-
-    const result = await response.json();
-    
-    // Store mapping between our frontend documentId and backend doc_id
-    this.docMetadata.set(documentId, {
-      filename: result.filename || filename,
-      docId: result.doc_id,
-    });
   }
 
   async search(query: string, topK: number, threshold: number): Promise<Citation[]> {
@@ -54,9 +74,14 @@ class FastAPIVectorStore implements VectorStoreAdapter {
   }
 
   async deleteDocument(documentId: string): Promise<void> {
-    // Backend doesn't expose delete endpoint yet
-    // Remove from local metadata for now
     this.docMetadata.delete(documentId);
+    try {
+      await fetch(`${FASTAPI_URL}/documents/${documentId}`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.warn('Failed to delete document from backend', error);
+    }
   }
 
   getDocMetadata(documentId: string) {

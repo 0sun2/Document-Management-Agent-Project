@@ -75,11 +75,11 @@ class FastAPILLM implements LLMAdapter {
       id: `cite-${idx}`,
       documentId: match.doc_id,
       documentTitle: match.filename || 'Document',
-      chunkIndex: match.chunk_index || 0,
+      chunkIndex: match.chunk_index ?? 0,
       page: match.chunk_index ? Math.floor(match.chunk_index / 3) + 1 : 1,
-      snippet: '', // Backend doesn't return content in matches
+      snippet: match.chunk_text || '',
       score: match.similarity || 0,
-      highlight: '',
+      highlight: match.chunk_text || '',
     }));
 
     // Map web citations
