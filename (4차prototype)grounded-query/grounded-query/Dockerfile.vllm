@@ -1,0 +1,16 @@
+FROM vllm/vllm-openai:latest
+
+ENV VLLM_MODEL_PATH=/models/qwen3_4b_ft \
+    VLLM_SERVED_MODEL_NAME=qwen3-4b-ft \
+    VLLM_HOST=0.0.0.0 \
+    VLLM_PORT=9000 \
+    VLLM_API_KEY=EMPTY \
+    VLLM_GPU_MEMORY_UTILIZATION=0.75 \
+    VLLM_MAX_NUM_SEQS=128
+
+COPY deploy/run_vllm.sh /run_vllm.sh
+RUN chmod +x /run_vllm.sh
+
+EXPOSE 9000
+
+CMD ["/run_vllm.sh"]

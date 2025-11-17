@@ -1,0 +1,16 @@
+[Unit]
+Description=Grounded Query - docker compose stack
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/lys/Documents/GitHub/Document-Management-Agent-Project/(4차prototype)grounded-query/grounded-query
+Environment="COMPOSE_PROJECT_NAME=grounded-query"
+ExecStart=/usr/bin/docker compose --env-file deploy/.env.compose up -d --build
+ExecStop=/usr/bin/docker compose --env-file deploy/.env.compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target

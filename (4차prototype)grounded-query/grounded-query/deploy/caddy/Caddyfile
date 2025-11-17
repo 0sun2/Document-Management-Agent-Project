@@ -1,0 +1,21 @@
+grounded-query.example.com {
+  encode gzip
+
+  @api path /api* /docs* /redoc*
+  handle @api {
+    reverse_proxy 127.0.0.1:8000 {
+      header_up Host {host}
+    }
+  }
+
+  @vllm path /v1*
+  handle @vllm {
+    reverse_proxy 127.0.0.1:9000 {
+      header_up Host {host}
+    }
+  }
+
+  handle {
+    reverse_proxy 127.0.0.1:8080
+  }
+}
