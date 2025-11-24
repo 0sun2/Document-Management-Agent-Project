@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.local
+
+# Storage (will be mounted as volume)
+storage/originals/*
+storage/vectors/*
+
+# Logs (will be mounted as volume)
+logs/*.log
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+MIGRATION_GUIDE.md
+
+# Scripts (not needed in container)
+start_backend.sh
+start_vllm.sh
+
+# Testing
+.pytest_cache/
+tests/
+*.test.py
