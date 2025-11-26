@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 13% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 13%;
+
+    --primary: 180 65% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 13% 96%;
+    --secondary-foreground: 220 13% 13%;
+
+    --muted: 220 13% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 180 65% 95%;
+    --accent-foreground: 180 65% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 180 65% 48%;
+
+    --radius: 0.75rem;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    --sidebar-background: 220 13% 98%;
+    --sidebar-foreground: 220 13% 20%;
+    --sidebar-primary: 180 65% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 96%;
+    --sidebar-accent-foreground: 220 13% 20%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 180 65% 48%;
+  }
+
+  .dark {
+    --background: 220 16% 10%;
+    --foreground: 220 13% 95%;
+
+    --card: 220 16% 13%;
+    --card-foreground: 220 13% 95%;
+
+    --popover: 220 16% 13%;
+    --popover-foreground: 220 13% 95%;
+
+    --primary: 180 65% 55%;
+    --primary-foreground: 220 16% 10%;
+
+    --secondary: 220 13% 18%;
+    --secondary-foreground: 220 13% 95%;
+
+    --muted: 220 13% 18%;
+    --muted-foreground: 220 9% 60%;
+
+    --accent: 220 13% 20%;
+    --accent-foreground: 180 65% 70%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+    --ring: 180 65% 55%;
+
+    --success: 142 76% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 60%;
+    --warning-foreground: 0 0% 100%;
+
+    --info: 199 89% 58%;
+    --info-foreground: 0 0% 100%;
+
+    --sidebar-background: 220 16% 12%;
+    --sidebar-foreground: 220 13% 85%;
+    --sidebar-primary: 180 65% 55%;
+    --sidebar-primary-foreground: 220 16% 10%;
+    --sidebar-accent: 220 13% 18%;
+    --sidebar-accent-foreground: 220 13% 85%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 180 65% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

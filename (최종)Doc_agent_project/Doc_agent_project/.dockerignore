@@ -1,0 +1,22 @@
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+MIGRATION_GUIDE.md
+
+# Logs
+logs/
+
+# Scripts
+start_all.sh
+stop_all.sh
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
